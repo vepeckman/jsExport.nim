@@ -15,7 +15,10 @@ proc exportStatement(node: NimNode): NimNode =
 
 macro jsExport*(body: untyped): untyped =
   result = newStmtList()
-  result.add(quote do: module.exports = newJsObject())
+  result.add(quote do:
+    if module.exports == jsNull or module.exports == jsUndefined:
+      module.exports = newJsObject()
+  )
 
   if body.len == 0:
     result.add(exportStatement(body))

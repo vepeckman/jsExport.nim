@@ -20,4 +20,6 @@ proc greetPerson(person: Person): cstring =
 jsExport:
   "nimGreet" = greet
   greetPerson
-  (name, person, newPerson)
+  (name, person)
+
+jsExport(newPerson)
