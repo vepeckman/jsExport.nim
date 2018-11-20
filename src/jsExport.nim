@@ -31,3 +31,6 @@ macro jsExport*(body: untyped): untyped =
           result.add(exportStatement(child))
     else:
       result.add(exportStatement(node))
+
+template jsSingleExport*(exported: untyped): untyped =
+  module.exports = exported

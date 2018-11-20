@@ -2,6 +2,10 @@ import jsffi, unittest
 import exporter
 
 let nimMod = require(cstring("./exporter.js"))
+{.emit: """
+let greet = require("./singleExporter.js");
+""".}
+proc greet(name: JsObject): JsObject {.importc, nodecl.}
 
 suite "Exports":
 
@@ -17,3 +21,8 @@ suite "Exports":
 
   test "Nim object constructor export":
     check(nimMod.greetPerson(nimMod.newPerson("Test 5", 0)) == toJs "Hello Test 5")
+
+suite "Single Exports":
+
+  test "Single Export":
+    check(greet(toJs "Test 1") == toJs "Hello Test 1")
